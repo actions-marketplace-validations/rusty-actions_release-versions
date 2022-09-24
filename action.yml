@@ -1,0 +1,29 @@
+---
+name: Release Versions Generator
+author: rusty-actiona
+description: Convenience action to create release versions from a tag
+branding:
+  icon: "check-square"
+  color: "green"
+inputs:
+  tag:
+    description: release version to use i.e. 1.2.3
+    required: true
+    default: ""
+  prefix:
+    description: Prefix to apply to the version i.e. v1.2.3
+    required: false
+    default: ""
+outputs:
+  major_version:
+    description: The major version i.e. 1
+  minor_version:
+    description: The minor version i.e. 1.2
+  patch_version:
+    description: The patch version i.e. 1.2.3
+runs:
+  using: docker
+  image: Dockerfile
+  args:
+    - ${{ inputs.tag }}
+    - ${{ inputs.prefix }}
