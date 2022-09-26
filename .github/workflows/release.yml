@@ -28,30 +28,6 @@ jobs:
           tag: ${{ steps.bumper.outputs.new_version }}
           prefix: v
 
-      - name: Update README major version
-        id: version_count
-        run: echo "::set-output name=count::$(fgrep -c rusty-actions/release-versions@${{ steps.versions.outputs.major_version }} ) README.md"
-
-      - name: Update README usage example
-        if: steps.version_count.outputs.count == 0
-        run: |
-          sed -i 's|uses\: rusty-actions/rusty-actions/dockerfile-linter@.*|uses\: rusty-actions/rusty-actions/dockerfile-linter@${{ steps.versions.outputs.major_version }}|g' README.md
-
-      - name: Configure git
-        if: steps.version_count.outputs.count == 0
-        run: |
-          git config user.name "${{ github.actor }}"
-          git config user.email "${{ github.actor }}@users.noreply.github.com"
-
-      - name: Push modifications
-        if: steps.version_count.outputs.count == 0
-        run: |
-          if [[ ! $(git diff --quiet) ]]; then
-            git add README.md
-            git commit -m "docs: update README usage section with v${{ steps.bumper.outputs.major_part }} [skip ci]"
-            git push
-          fi
-
       - name: Create tag
         uses: rickstaa/action-create-tag@v1
         with:
