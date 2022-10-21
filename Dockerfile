@@ -1,5 +1,4 @@
-FROM alpine:3.14
-RUN apk add git=2.32.3-r0 --no-cache
+FROM alpine/git:v2.32.0
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
