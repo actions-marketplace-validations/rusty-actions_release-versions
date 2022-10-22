@@ -5,10 +5,10 @@ cd $GITHUB_WORKSPACE
 TAG="${1}"
 PREFIX="${2}"
 
-major=$(echo $TAG | awk -F. '{print $1}')
-minor=$(echo $TAG | awk -F. '{print $2}')
-patch=$(echo $TAG | awk -F. '{print $3}')
+MAJOR=$PREFIX$(echo $TAG | awk -F. '{print $1}')
+MINOR=$MAJOR.$(echo $TAG | awk -F. '{print $2}')
+PATCH=$MINOR.$(echo $TAG | awk -F. '{print $3}')
 
-echo "::set-output name=major_version::$PREFIX$major"
-echo "::set-output name=minor_version::$PREFIX$major.$minor"
-echo "::set-output name=patch_version::$PREFIX$major.$minor.$patch"
+echo "major_version=$MAJOR" >> $GITHUB_OUTPUT
+echo "minor_version=$MINOR" >> $GITHUB_OUTPUT
+echo "patch_version=$PATCH" >> $GITHUB_OUTPUT
